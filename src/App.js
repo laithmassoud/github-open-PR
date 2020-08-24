@@ -42,8 +42,9 @@ function App() {
         <ul>
           {" "}
           {repos.map((repo) => (
-            <li id={repo[0].id} key={repo[0].id}>{repo[0].url}</li>
-          ))}
+            repo.map((data) => 
+            <RepoCard id={data.id} key={data.id} pull_request={data}/>
+           ) ))}
         </ul>
       )}
     </div>
