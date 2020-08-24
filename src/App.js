@@ -19,17 +19,35 @@ function App() {
     Promise.all(repoNames.map(name =>
       fetch(`https://api.github.com/repos/evannetwork/${name}/pulls?state=all`).then(resp => resp.json())
   )).then(res => {
-      console.log(res);
-  })
+    const newArr = res.filter(function(item){
+      return item.length !== 0;
+    });
 
-    setLoading(false);
+    const arr = newArr.map((res) => res);
+
+    setRepos(arr)
+    setLoading(false)
+  })
   };
   
   useEffect(() => {
     fetchData();
   }, []);
 
-  return <div></div>;
+  return (
+    <div>
+      {loading ? (
+        <div>Loading ....</div>
+      ) : (
+        <ul>
+          {" "}
+          {repos.map((repo) => (
+            <li id={repo[0].id} key={repo[0].id}>{repo[0].url}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
 
 export default App;
